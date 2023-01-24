@@ -11,7 +11,7 @@ For the ATARI environments, we use the ALE library and the autorom library for R
 
 ---
 ### IMPALA
-Impala is implemented in RLLib but I need to recreate the network architecture used in the paper. Someone tried to implement it here: https://github.com/jlsvane/RLLIB-Impala.
+Impala is implemented in RLLib but I need to recreate the network architecture used in the paper. Someone tried to implement it here: https://github.com/jlsvane/RLLIB-Impala. I need to create a module subclass of TorchModelV2 as in (https://docs.ray.io/en/latest/rllib/rllib-models.html#customizing-preprocessors-and-models)
 
 ---
 ### SOTA
