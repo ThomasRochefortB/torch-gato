@@ -13,6 +13,37 @@ For the ATARI environments, we use the ALE library and the autorom library for R
 ### IMPALA
 Impala is implemented in RLLib but I need to recreate the network architecture used in the paper. Someone tried to implement it here: https://github.com/jlsvane/RLLIB-Impala. I need to create a module subclass of TorchModelV2 as in (https://docs.ray.io/en/latest/rllib/rllib-models.html#customizing-preprocessors-and-models)
 
+
+IMPALA Model architecture:
+The IMPALA paper used two architectures: (Small and Large)
+Input is an RGB 96 x 72 image normalized by dividing pixel values by 255
+
+Small:  
+-> A Conv2D layer of 16 8x8 kernels with stride = 4  
+-> A ReLU activation layer  
+-> A Conv2D layer of 32 8x8 kernels with stride =2  
+-> A Fully-connected layer of 256 units  
+-> A ReLU activation layer  
+-> The output of the last layer was concatenated with r_t-1, a_t-1 in a 256 units LSTM layer as well as with the output of a 64 units LSTM layer of a text embedding  
+
+Large:  
+-> Three blocks of :  
+    -> Conv2D layer of 16 3x3 kernels with stride=1  
+    -> A MaxPool layer with 3x3 kernels and stride=2  
+    -> 2 Residual block  
+-> A ReLU activation layer  
+-> A Fully-connected layer of 256 units  
+-> A ReLU activation layer  
+-> The output of the last layer was concatenated with r_t-1, a_t-1 in a 256 units LSTM layer as well as with the output of a 64 units LSTM layer of a text embedding
+
+
+The residual block consists of:  
+->Relu activation layer  
+        -> A conv2D layer of 32 3x3 stride=1  
+        -> A ReLu activation layer  
+        -> A Conv2D layer of 32 3x3 stride=  
+        -> The output of the last Conv2D of the resblock is added to the input of the block
+
 ---
 ### SOTA
 
